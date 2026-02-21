@@ -34,7 +34,7 @@ const Login = () => {
 
       {!showLogin ? (
         <h1
-          className={`text-5xl font-bold transition-opacity duration-1000 ${
+          className={`text-4xl lg:text-5xl font-bold transition-opacity duration-1000 ${
             fadeOut ? "opacity-0" : "opacity-100"
           }`}
         >
@@ -44,7 +44,7 @@ const Login = () => {
           </span>
         </h1>
       ) : (
-        <Card className="w-full max-w-sm animate-in fade-in zoom-in duration-500">
+        <Card className="w-full max-w-sm animate-in fade-in zoom-in duration-500 mx-4 md:mx-0">
           <CardHeader>
             <CardTitle>Login to your account</CardTitle>
           </CardHeader>

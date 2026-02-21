@@ -1,0 +1,106 @@
+[
+  {
+    "id": "post_2",
+    "user": {
+      "id": "user_2",
+      "name": "James Chen",
+      "username": "james.creates",
+      "profileImage": "https://randomuser.me/api/portraits/men/32.jpg"
+    },
+    "image": "https://picsum.photos/500/500?random=2",
+    "caption": "Slow mornings are the best mornings ☕",
+    "likes": 289,
+    "likedByUser": true,
+    "comments": [
+      {
+        "id": "c3",
+        "username": "coffeelover",
+        "text": "Nothing beats this vibe!"
+      },
+      {
+        "id": "c4",
+        "username": "minimalmood",
+        "text": "Peaceful setup 🔥"
+      }
+    ],
+    "createdAt": "2026-02-21T07:30:00Z"
+  },
+  {
+    "id": "post_3",
+    "user": {
+      "id": "user_3",
+      "name": "Aarav Kapoor",
+      "username": "aarav.codes",
+      "profileImage": "https://randomuser.me/api/portraits/men/45.jpg"
+    },
+    "image": "https://picsum.photos/500/500?random=3",
+    "caption": "Late night coding sessions hit different 💻🌙",
+    "likes": 512,
+    "likedByUser": false,
+    "comments": [
+      {
+        "id": "c5",
+        "username": "devlife",
+        "text": "That dark mode glow 🔥"
+      },
+      {
+        "id": "c6",
+        "username": "reactfan",
+        "text": "What stack are you using?"
+      }
+    ],
+    "createdAt": "2026-02-20T22:10:00Z"
+  },
+  {
+    "id": "post_4",
+    "user": {
+      "id": "user_4",
+      "name": "Isabella Rossi",
+      "username": "bella.travels",
+      "profileImage": "https://randomuser.me/api/portraits/women/65.jpg"
+    },
+    "image": "https://picsum.photos/500/500?random=4",
+    "caption": "Chasing sunsets and new adventures 🌅✈️",
+    "likes": 874,
+    "likedByUser": true,
+    "comments": [
+      {
+        "id": "c7",
+        "username": "wanderlust",
+        "text": "This view is unreal!"
+      },
+      {
+        "id": "c8",
+        "username": "travelgram",
+        "text": "Adding this to my bucket list 😍"
+      }
+    ],
+    "createdAt": "2026-02-19T18:45:00Z"
+  },
+  {
+    "id": "post_5",
+    "user": {
+      "id": "user_5",
+      "name": "Riya Sharma",
+      "username": "riya.artsy",
+      "profileImage": "https://randomuser.me/api/portraits/women/25.jpg"
+    },
+    "image": "https://picsum.photos/500/500?random=5",
+    "caption": "Art is not what you see, but what you make others see 🎨✨",
+    "likes": 431,
+    "likedByUser": false,
+    "comments": [
+      {
+        "id": "c9",
+        "username": "creative_soul",
+        "text": "Absolutely stunning work!"
+      },
+      {
+        "id": "c10",
+        "username": "designworld",
+        "text": "Love the color palette 💜"
+      }
+    ],
+    "createdAt": "2026-02-18T14:20:00Z"
+  }
+]
