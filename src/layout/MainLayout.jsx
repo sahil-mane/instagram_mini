@@ -6,7 +6,7 @@ const MainLayout = () => {
 	return (
 		<>
 			<Header />
-			<div className='pt-[66px] max-w-[1104px] mx-auto overflow-scroll'>
+			<div className='pt-[66px] max-w-[1104px] mx-auto min-h-screen'>
 			<Outlet />
 			</div>
 		</>
