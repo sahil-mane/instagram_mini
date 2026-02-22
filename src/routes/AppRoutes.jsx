@@ -6,13 +6,18 @@ import Profile from '../pages/Profile'
 import MainLayout from '../layout/MainLayout'
 import Login from '../pages/Login'
 import DetailPage from '@/pages/subPage/DetailPage'
+import ProtectedRoutes from './ProtectedRoutes'
 
 const AppRoutes = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path="/login" element={<Login />} />
-				<Route path='/' element={<MainLayout />}>
+				<Route path='/' element={
+					<ProtectedRoutes>
+						<MainLayout />
+					</ProtectedRoutes>
+				}>
 					<Route index element={<Home />} />
 					<Route path='home/:id' element={<DetailPage />} />
 					<Route path='/explore' element={<Explore />} />

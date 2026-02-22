@@ -9,10 +9,25 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useAuthStore } from "@/store/authStore"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
   const [showLogin, setShowLogin] = useState(false)
   const [fadeOut, setFadeOut] = useState(false)
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
+
+  const login = useAuthStore((state) => state.login)
+
+  const handleLogin = () => {
+        if (userName && password) {
+      login({ user: { userName, password }, token: Math.trunc(Math.random() * 10000) })
+      navigate("/")
+    }
+
+  }
 
   useEffect(() => {
     const fadeTimer = setTimeout(() => {
@@ -30,13 +45,17 @@ const Login = () => {
   }, [])
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div onKeyDown={(e)=>{
+      if(e.key === "Enter")
+      {
+        handleLogin();
+      }
+    }} className="min-h-screen flex items-center justify-center">
 
       {!showLogin ? (
         <h1
-          className={`text-4xl lg:text-5xl font-bold transition-opacity duration-1000 ${
-            fadeOut ? "opacity-0" : "opacity-100"
-          }`}
+          className={`text-4xl lg:text-5xl font-bold transition-opacity duration-1000 ${fadeOut ? "opacity-0" : "opacity-100"
+            }`}
         >
           Welcome to{" "}
           <span className="bg-gradient-to-r from-violet-500 to-indigo-500 bg-clip-text text-transparent">
@@ -53,17 +72,17 @@ const Login = () => {
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label>Email</Label>
-                <Input className="focus-visible:ring-violet-300" type="email" required />
+                <Input value={userName} onChange={(e) => setUserName(e.target.value)} className="focus-visible:ring-violet-300" type="email" required />
               </div>
               <div className="grid gap-2">
                 <Label>Password</Label>
-                <Input className="focus-visible:ring-violet-300" type="password" required />
+                <Input value={password} onChange={(e) => setPassword(e.target.value)} className="focus-visible:ring-violet-300" type="password" required />
               </div>
             </div>
           </CardContent>
 
           <CardFooter className="flex flex-col gap-2">
-            <Button className="w-full bg-gradient-to-r from-violet-500 to-indigo-500 cursor-pointer">
+            <Button onClick={handleLogin} className="w-full bg-gradient-to-r from-violet-500 to-indigo-500 cursor-pointer">
               Sign in
             </Button>
             <Button className="w-full border-2 border-violet-400-50 bg-transparent text-black hover:bg-transparent cursor-pointer">
