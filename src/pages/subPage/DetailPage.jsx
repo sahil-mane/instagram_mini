@@ -5,13 +5,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const DetailPage = () => {
+    const location = useLocation()
+    const navigate = useNavigate()
+    console.log("location",location)
 
     return (
         <div className='bg-[#F8FAFC] px-6 pt-6 min-h-screen lg:min-h-[calc(100vh-80px)] flex flex-col'>
 
-            <div className='flex gap-2 items-center pb-6'>
+            <div onClick={()=>{navigate(-1)}} className='flex gap-2 items-center pb-6 cursor-pointer'>
                 <LeftIcon />
                 <p>Back</p>
             </div>
