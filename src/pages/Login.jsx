@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -12,84 +13,155 @@ import { Label } from "@/components/ui/label"
 import { useAuthStore } from "@/store/authStore"
 import { useNavigate } from "react-router-dom"
 
-const Login = () => {
-  const [showLogin, setShowLogin] = useState(false)
-  const [fadeOut, setFadeOut] = useState(false)
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("")
-  const navigate = useNavigate()
+// === Pixora Splash Animation ===
+const PixoraSplash = ({ onComplete }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (typeof onComplete === "function") onComplete()
+    }, 3200)
+    return () => clearTimeout(timer)
+  }, [onComplete])
 
+  return (
+    <motion.div
+      className="absolute inset-0 flex items-center justify-center overflow-hidden z-30"
+      initial={{ backgroundColor: "#000" }}
+      animate={{ backgroundColor: ["#000", "#000", "#000", "#f0008c"] }}
+      transition={{ duration: 3, ease: "easeInOut", times: [0, 0.4, 0.6, 1] }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-fuchsia-600 via-pink-500 to-orange-400"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 0, 1] }}
+        transition={{ duration: 3, times: [0, 0.6, 1], ease: "easeInOut" }}
+      />
+      <div className="relative flex items-center justify-center z-10">
+        <motion.div
+          className="grid grid-cols-2 gap-[4px]"
+          initial={{ rotate: 0, scale: 0, opacity: 0 }}
+          animate={{
+            rotate: [0, 45, 0],
+            scale: [0, 1.15, 1],
+            opacity: 1,
+          }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+        >
+          {[...Array(4)].map((_, i) => (
+            <div
+              key={i}
+              className="w-6 h-6 bg-fuchsia-500 rounded-sm sm:w-8 sm:h-8"
+            />
+          ))}
+        </motion.div>
+
+        <motion.h1
+          className="ml-3 text-white text-4xl sm:text-5xl font-bold tracking-tight"
+          initial={{ opacity: 0, x: 25 }}
+          animate={{ opacity: [0, 0, 1], x: [25, 25, 0] }}
+          transition={{ duration: 3, times: [0, 0.6, 1], ease: "easeOut" }}
+        >
+          Pixora
+        </motion.h1>
+      </div>
+    </motion.div>
+  )
+}
+
+// === Main Login Screen ===
+const Login = () => {
+  const [animationDone, setAnimationDone] = useState(false)
+  const [slideLeft, setSlideLeft] = useState(false)
+  const navigate = useNavigate()
+  const [userName, setUserName] = useState("")
+  const [password, setPassword] = useState("")
   const login = useAuthStore((state) => state.login)
 
   const handleLogin = () => {
-        if (userName && password) {
-      login({ user: { userName, password }, token: Math.trunc(Math.random() * 10000) })
+    if (userName && password) {
+      login({
+        user: { userName, password },
+        token: Math.trunc(Math.random() * 10000),
+      })
       navigate("/")
     }
-
   }
 
+  // trigger slide after animation finishes
   useEffect(() => {
-    const fadeTimer = setTimeout(() => {
-      setFadeOut(true)
-    }, 3000)
-
-    const loginTimer = setTimeout(() => {
-      setShowLogin(true)
-    }, 4000)
-
-    return () => {
-      clearTimeout(fadeTimer)
-      clearTimeout(loginTimer)
+    if (animationDone) {
+      const timer = setTimeout(() => setSlideLeft(true), 300)
+      return () => clearTimeout(timer)
     }
-  }, [])
+  }, [animationDone])
 
   return (
-    <div onKeyDown={(e)=>{
-      if(e.key === "Enter")
-      {
-        handleLogin();
-      }
-    }} className="min-h-screen flex items-center justify-center">
+    <div
+      onKeyDown={(e) => {
+        if (e.key === "Enter") handleLogin()
+      }}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black text-white"
+    >
+      {/* Splash animation full screen first */}
+      <motion.div
+        className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+        initial={{ x: 0 }}
+        animate={{ x: slideLeft ? "-25%" : 0 }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+      >
+        <PixoraSplash onComplete={() => setAnimationDone(true)} />
+      </motion.div>
 
-      {!showLogin ? (
-        <h1
-          className={`text-4xl lg:text-5xl font-bold transition-opacity duration-1000 ${fadeOut ? "opacity-0" : "opacity-100"
-            }`}
+      {/* Login form appears AFTER animation and slide */}
+      {animationDone && (
+        <motion.div
+          className="absolute top-0 right-0 h-full w-full md:w-1/2 flex items-center justify-center bg-white text-black"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: slideLeft ? 1 : 0 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
         >
-          Welcome to{" "}
-          <span className="bg-gradient-to-r from-violet-500 to-indigo-500 bg-clip-text text-transparent">
-            Pixora
-          </span>
-        </h1>
-      ) : (
-        <Card className="w-full max-w-sm animate-in fade-in zoom-in duration-500 mx-4 md:mx-0">
-          <CardHeader>
-            <CardTitle>Login to your account</CardTitle>
-          </CardHeader>
+          <Card className="w-full max-w-sm mx-6 shadow-xl animate-in fade-in duration-500">
+            <CardHeader>
+              <CardTitle>Login to your account</CardTitle>
+            </CardHeader>
 
-          <CardContent>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
-                <Label>Email</Label>
-                <Input value={userName} onChange={(e) => setUserName(e.target.value)} className="focus-visible:ring-violet-300" type="email" required />
+            <CardContent>
+              <div className="flex flex-col gap-6">
+                <div className="grid gap-2">
+                  <Label>Email</Label>
+                  <Input
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                    className="focus-visible:ring-violet-300"
+                    type="email"
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label>Password</Label>
+                  <Input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="focus-visible:ring-violet-300"
+                    type="password"
+                    required
+                  />
+                </div>
               </div>
-              <div className="grid gap-2">
-                <Label>Password</Label>
-                <Input value={password} onChange={(e) => setPassword(e.target.value)} className="focus-visible:ring-violet-300" type="password" required />
-              </div>
-            </div>
-          </CardContent>
+            </CardContent>
 
-          <CardFooter className="flex flex-col gap-2">
-            <Button onClick={handleLogin} className="w-full bg-gradient-to-r from-violet-500 to-indigo-500 cursor-pointer">
-              Sign in
-            </Button>
-            <Button className="w-full border-2 border-violet-400-50 bg-transparent text-black hover:bg-transparent cursor-pointer">
-              Sign Up
-            </Button>
-          </CardFooter>
-        </Card>
+            <CardFooter className="flex flex-col gap-2">
+              <Button
+                onClick={handleLogin}
+                className="w-full bg-gradient-to-r from-violet-500 to-indigo-500"
+              >
+                Sign in
+              </Button>
+              <Button className="w-full border border-violet-400 bg-transparent text-black hover:bg-transparent">
+                Sign Up
+              </Button>
+            </CardFooter>
+          </Card>
+        </motion.div>
       )}
     </div>
   )

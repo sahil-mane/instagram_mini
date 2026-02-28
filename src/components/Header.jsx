@@ -60,7 +60,7 @@ const Header = () => {
         {/* Logo */}
         <div className="flex items-center gap-2">
           <MainLogo />
-          <p className="text-[20px] font-semibold">Aura</p>
+          <p className="text-[20px] font-semibold">Pixora</p>
         </div>
 
         {/* Desktop Navigation */}
