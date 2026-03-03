@@ -18,7 +18,7 @@ const Explore = () => {
   };
   return (
     <div className="bg-[#F8FAFC] py-8 px-6">
-      <div className='flex flex-col gap-2 border-2 border-amber-600'>
+      <div className='flex flex-col gap-2 '>
         <h1 className='text-3xl'>
           Explore
         </h1>
