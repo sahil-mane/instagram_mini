@@ -46,12 +46,12 @@ const ExploreDetailPage = ({ open, setOpen, selectedImage }) => {
         <img
           src={selectedImage?.url}
           alt=""
-          className="w-full lg:h-full object-contain"
+          className="w-1/2 h-1/2 lg:h-full object-contain"
         />
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="w-full lg:w-1/2 px-8 flex flex-col bg-white">
+      <div className="w-full lg:w-1/2 lg:px-8 flex flex-col bg-white">
         <div className="flex justify-between items-center border-b-2 border-gray-300">
           <div className="flex gap-5 items-center jus py-3">
             <img src={ProfilePic} alt="tanish" className="h-12 w-12 rounded-full" />
@@ -59,7 +59,7 @@ const ExploreDetailPage = ({ open, setOpen, selectedImage }) => {
           </div>
           <p>...</p>
         </div>
-        <div className="flex-1">
+        <div className=" min-h-52 lg:flex-1">
 
         </div>
         <div className='border-t-2 border-[#E2E8F0] mt-6'>
@@ -81,7 +81,7 @@ const ExploreDetailPage = ({ open, setOpen, selectedImage }) => {
           </div>
           <p>324 likes</p>
         </div>
-        <div className="flex items-center p-3 gap-3 pt-6">
+        <div className="flex items-center lg:p-3 gap-3 pt-6">
           <input className="flex-1 focus:outline-none bg-[#F8FAFC] h-[48px] rounded-lg px-4" type="text" name="" id="" placeholder="Add a comment..." />
           <p className="cursor-pointer">Post</p>
         </div>
