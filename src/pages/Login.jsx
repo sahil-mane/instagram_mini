@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuthStore } from "@/store/authStore"
 import { useNavigate } from "react-router-dom"
+import apiClient from "@/utils/apiClient"
 
 // === Pixora Splash Animation ===
 const PixoraSplash = ({ onComplete }) => {
@@ -72,19 +73,40 @@ const Login = () => {
   const [animationDone, setAnimationDone] = useState(false)
   const [slideLeft, setSlideLeft] = useState(false)
   const navigate = useNavigate()
-  const [userName, setUserName] = useState("")
+  // const [userName, setUserName] = useState("")
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const login = useAuthStore((state) => state.login)
 
-  const handleLogin = () => {
-    if (userName && password) {
-      login({
-        user: { userName, password },
-        token: Math.trunc(Math.random() * 10000),
-      })
-      navigate("/")
+  const handleLogin = async () => {
+    if (!email || !password) return;
+
+    try {
+      const res = await apiClient.post("/api/auth/login", {
+        email,
+        password,
+      });
+
+      if (res?.success) {
+        login(res.data.token);
+        navigate("/");
+      }
+
+    } catch (error) {
+      console.error("Login Error:", error);
+
+      if (error.response) {
+        // Server ne error bheja
+        alert(error.response.data.message || "Login failed");
+      } else if (error.request) {
+        // Request gaya but response nahi aaya
+        alert("Server response nahi mila");
+      } else {
+        // Kuch aur error
+        alert("Something went wrong");
+      }
     }
-  }
+  };
 
   // trigger slide after animation finishes
   useEffect(() => {
@@ -129,8 +151,8 @@ const Login = () => {
                 <div className="grid gap-2">
                   <Label>Email</Label>
                   <Input
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="focus-visible:ring-violet-300"
                     type="email"
                     required

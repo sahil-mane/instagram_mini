@@ -13,7 +13,7 @@ import CustomTooltip from "./CustomTooltip";
 import AvatarPic from "../assets/profile_pic.jpg"
 
 const AppSidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
