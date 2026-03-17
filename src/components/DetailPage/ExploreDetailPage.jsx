@@ -29,7 +29,7 @@ const ExploreDetailPage = ({ open, setOpen, selectedImage }) => {
       {/* LEFT IMAGE */}
       <div className=" w-full lg:w-1/2 flex  justify-center bg-black">
         <img
-          src={selectedImage.url}
+          src={selectedImage?.url}
           alt=""
           className="h-full object-contain"
         />
@@ -40,7 +40,7 @@ const ExploreDetailPage = ({ open, setOpen, selectedImage }) => {
         <div>
           <DialogHeader>
             <DialogTitle className="text-2xl">
-              {selectedImage.title}
+              {selectedImage?.title}
             </DialogTitle>
             <DialogDescription>
               Community shared inspiration
