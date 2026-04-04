@@ -44,7 +44,7 @@ const Explore = () => {
         {images.map((img) => (
           <div key={img.id} className="break-inside-avoid">
             <img
-              src={img.url}
+              src={img?.url}
               alt={img.title}
               onClick={() => handleClick(img)}
               className="w-full rounded-2xl mb-4 hover:scale-105 transition-transform duration-300 cursor-pointer"
