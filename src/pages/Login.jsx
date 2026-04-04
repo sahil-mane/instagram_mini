@@ -76,6 +76,7 @@ const Login = () => {
   // const [userName, setUserName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [showPassword,setShowPassword] = useState(false)
   const login = useAuthStore((state) => state.login)
 
   const handleLogin = async () => {
@@ -160,13 +161,23 @@ const Login = () => {
                 </div>
                 <div className="grid gap-2">
                   <Label>Password</Label>
-                  <Input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="focus-visible:ring-violet-300"
-                    type="password"
-                    required
-                  />
+                  <div className="relative">
+                    <Input
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      type={showPassword ? "text" : "password"}
+                      className="focus-visible:ring-violet-300 pr-10"
+                      required
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() =>{if(password?.length > 3) setShowPassword(!showPassword)}}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+                    >
+                      {showPassword ? "Show" : "Hide"}
+                    </button>
+                  </div>
                 </div>
               </div>
             </CardContent>
